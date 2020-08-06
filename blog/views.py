@@ -27,7 +27,6 @@ def post_detail2(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail2.html', {'post': post})
 
-
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
