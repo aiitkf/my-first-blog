@@ -8,6 +8,6 @@ urlpatterns = [
     path('post/new/', views.post_new, name='post_new'),
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
         # グラフ描画
-    path('plot/', views.get_svg, name='plot'),
+    # path('plot/', views.get_svg, name='plot'),
     # path('test/', views.viewFunction, name='test'),
 ]
