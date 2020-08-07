@@ -9,5 +9,5 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
         # グラフ描画
     path('plot/', views.get_svg, name='plot'),
-    path('test/', views.viewFunction, name='test'),
+    # path('test/', views.viewFunction, name='test'),
 ]

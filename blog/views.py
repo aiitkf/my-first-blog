@@ -20,19 +20,12 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
-def post_detail2(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail2.html', {'post': post})
-
-
-def viewFunction(request):
+def whitejapanmap():
     import urllib
     import base64
     import io
     import matplotlib.pyplot as plt
     from japanmap import picture
-    template_name = "template.html"
-    template_text = "Hello World!"  # <- テンプレートに渡したい文字列
     plt.rcParams['figure.figsize'] = 6, 6
     plt.imshow(picture())
     fig = plt.gcf()
@@ -41,8 +34,14 @@ def viewFunction(request):
     buf.seek(0)
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
-    context = {"text": template_text, "data": uri}
-    return render(request, template_name, context)  # <-変数の入った辞書を第三引数に渡す
+    return uri
+
+
+def post_detail2(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    map = whitejapanmap()
+    data = {'post': post, 'uri': map}
+    return render(request, 'blog/post_detail2.html', data)
 
 
 def post_new(request):
