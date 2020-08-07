@@ -3,9 +3,6 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.http import HttpResponse
 
-import matplotlib.pyplot as plt
-from japanmap import picture
-
 from .models import Post
 from .forms import PostForm
 
@@ -26,6 +23,27 @@ def post_detail(request, pk):
 def post_detail2(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail2.html', {'post': post})
+
+
+def viewFunction(request):
+    import urllib
+    import base64
+    import io
+    import matplotlib.pyplot as plt
+    from japanmap import picture
+    template_name = "template.html"
+    template_text = "Hello World!"  # <- テンプレートに渡したい文字列
+    plt.rcParams['figure.figsize'] = 6, 6
+    plt.imshow(picture())
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    context = {"text": template_text, "data": uri}
+    return render(request, template_name, context)  # <-変数の入った辞書を第三引数に渡す
+
 
 def post_new(request):
     if request.method == "POST":
@@ -57,5 +75,5 @@ def post_edit(request, pk):
 
 
 def get_svg(request,  pk):
-    #plt.rcParams['figure.figsize'] = 6, 6
-    return plt.imshow(picture());
+    # plt.rcParams['figure.figsize'] = 6, 6
+    return plt.imshow(picture())
